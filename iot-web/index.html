@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Monitor IoT — Temperatura & Umidade</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Monitor IoT <small>ESP32 • Firebase RTDB</small></h1>
+        <div class="sub">Acompanhe temperatura e umidade em tempo real</div>
+      </div>
+
+      <div class="status-block">
+        <div id="connBadge" class="badge neutral">Conectando...</div>
+        <div class="meta">Device: <strong id="deviceLabel">esp32-lab-001</strong></div>
+      </div>
+    </header>
+
+    <section class="controls">
+      <div class="left">
+        <div class="cards">
+          <article id="cardTemp" class="card card-temp">
+            <div class="card-title">🌡 Temperatura</div>
+            <div class="card-value" id="tempVal">-- °C</div>
+            <div id="tempState" class="card-sub">—</div>
+          </article>
+
+          <article id="cardHum" class="card card-hum">
+            <div class="card-title">💧 Umidade</div>
+            <div class="card-value" id="humVal">-- %</div>
+            <div id="humState" class="card-sub">—</div>
+          </article>
+        </div>
+
+        <div class="meta-row">
+          <div>Última leitura: <strong id="lastTs">—</strong></div>
+          <div id="pointsLabel">Pontos: 0</div>
+        </div>
+
+        <div class="chart-card">
+          <canvas id="mainChart" aria-label="Gráfico de temperatura e umidade"></canvas>
+          <div class="chart-actions">
+            <button id="btnClear" class="btn">Limpar</button>
+            <button id="btnExport" class="btn">Exportar CSV</button>
+            <button id="btnSim" class="btn alt">Ativar Simulação</button>
+            <button id="btnReconnect" class="btn">Re-conectar</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="right">
+        <div class="panel">
+          <label>DEVICE_ID</label>
+          <input id="deviceId" type="text" value="esp32-lab-001" />
+        </div>
+
+        <div class="panel">
+          <label>Últimas leituras (com horário)</label>
+          <ul id="historyList" class="history" aria-live="polite"></ul>
+        </div>
+
+        <div class="panel">
+          <label>Config</label>
+          <div class="row">
+            <label>Limite pontos</label>
+            <select id="limit" >
+              <option>30</option>
+              <option selected>60</option>
+              <option>100</option>
+            </select>
+          </div>
+          <div class="row">
+            <label>Intervalo sim (ms)</label>
+            <input id="simInterval" type="number" value="3000" />
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <div>© 2025 Monitor IoT. Todos os direitos reservados.</div>
+      <div class="muted">SENAI</div>
+    </footer>
+  </main>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
