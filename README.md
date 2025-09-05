@@ -1,38 +1,95 @@
-Monitor IoT com ESP32 e Firebase
+# 🌡️ Monitor IoT com ESP32 e Firebase
 
-Este projeto consiste num sistema de monitorização de temperatura e humidade em tempo real, utilizando um microcontrolador ESP32, uma base de dados na nuvem (Firebase Realtime Database) e um dashboard web interativo.
-Funcionalidades
+Este projeto implementa um sistema de **monitorização em tempo real** de temperatura e humidade utilizando o microcontrolador **ESP32**, integrado ao **Firebase Realtime Database** e a um **dashboard web interativo**.
 
-    Monitorização em Tempo Real: Os dados do sensor são enviados para a nuvem e exibidos instantaneamente na interface web.
+---
 
-    Dashboard Interativo: A interface exibe os dados em cards, num gráfico histórico e numa lista de últimas leituras.
+## 🚀 Funcionalidades
 
-    Gráfico Dinâmico: Utiliza a biblioteca Chart.js para visualizar a evolução da temperatura e da humidade.
+* 📡 **Monitorização em Tempo Real**: Dados do sensor enviados para a nuvem e exibidos instantaneamente.
+* 📊 **Dashboard Interativo**: Exibe cards, gráfico histórico e lista das últimas leituras.
+* 📈 **Gráfico Dinâmico**: Visualização da evolução da temperatura e humidade com **Chart.js**.
+* 🧪 **Simulação de Dados**: Teste da interface web sem necessidade de dispositivo físico.
+* 📥 **Exportação de Dados**: Histórico de medições exportável em `.csv`.
+* 📱 **Design Responsivo**: Interface adaptável a diferentes dispositivos.
 
-    Simulação de Dados: Permite testar a interface web sem a necessidade de um dispositivo físico conectado.
+---
 
-    Exportação de Dados: Funcionalidade para exportar o histórico de medições para um ficheiro .csv.
+## 🛠️ Tecnologias Utilizadas
 
-    Design Responsivo: A interface adapta-se a diferentes tamanhos de ecrã.
+* **Hardware**: ESP32, Sensor DHT22
+* **Firmware (ESP32)**: C++ com **Arduino Framework**
+* **Base de Dados**: Firebase Realtime Database
+* **Frontend (WebApp)**: HTML5, CSS3, JavaScript (ES6 Módulos), Chart.js
 
-Tecnologias Utilizadas
+---
 
-    Hardware: ESP32, Sensor DHT22.
+## ⚙️ Como Executar
 
-    Firmware (ESP32): C++ (Arduino Framework).
+### 🔧 1. Configurar Firebase
 
-    Base de Dados: Google Firebase (Realtime Database).
+1. Crie um projeto no [Firebase Console](https://console.firebase.google.com/).
+2. Ative o **Realtime Database**.
+3. Copie o objeto `firebaseConfig` para uso na aplicação web.
 
-    Frontend (WebApp): HTML5, CSS3, JavaScript (Módulos ES6).
+### 📡 2. Firmware (ESP32)
 
-Como Executar
+1. Abra o código `.ino` no **Arduino IDE** ou **PlatformIO**.
+2. Configure suas credenciais de **Wi-Fi** e **Firebase**.
+3. Faça o upload para o ESP32.
 
-    Configurar o Firebase: Crie um projeto no Firebase e ative o Realtime Database.
+### 💻 3. WebApp
 
-    Firmware (ESP32): Atualize o código .ino com as credenciais da sua rede Wi-Fi e do seu Firebase.
+1. Crie um arquivo `config.js` na pasta do projeto e adicione:
 
-    WebApp:
+   ```javascript
+   const firebaseConfig = {
+     apiKey: "SUA_API_KEY",
+     authDomain: "SEU_PROJECT_ID.firebaseapp.com",
+     databaseURL: "https://SEU_PROJECT_ID.firebaseio.com",
+     projectId: "SEU_PROJECT_ID",
+     storageBucket: "SEU_PROJECT_ID.appspot.com",
+     messagingSenderId: "SEU_SENDER_ID",
+     appId: "SUA_APP_ID"
+   };
+   ```
+2. Abra o `index.html` no navegador para visualizar o dashboard.
 
-        Crie um ficheiro config.js e cole o objeto firebaseConfig do seu projeto Firebase.
+---
 
-        Abra o ficheiro index.html num navegador.
+## 📂 Estrutura de Pastas
+
+```bash
+iotproject/
+ ├── esp32-firmware/      # Código do ESP32 (Arduino .ino)
+ ├── iot-web/             # Interface Web (HTML, CSS, JS)
+ ├── .gitignore
+ └── README.md
+```
+
+---
+
+## 📸 Demonstração
+
+*(Adicione aqui prints do dashboard e/ou fotos do hardware montado)*
+
+---
+
+## 📌 Próximos Passos
+
+* Implementar alertas por e-mail/WhatsApp quando valores ultrapassarem limites.
+* Dashboard com suporte a múltiplos sensores.
+* Hospedar a interface web online.
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas!
+Faça um **fork** do projeto, crie uma **branch** com sua feature e abra um **Pull Request**.
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT – veja o arquivo [LICENSE](LICENSE) para mais detalhes.
