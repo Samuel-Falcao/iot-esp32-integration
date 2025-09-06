@@ -4,9 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Monitor IoT — Temperatura & Umidade</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" defer></script>
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -16,7 +13,6 @@
         <h1>Monitor IoT <small>ESP32 • Firebase RTDB</small></h1>
         <div class="sub">Acompanhe temperatura e umidade em tempo real</div>
       </div>
-
       <div class="status-block">
         <div id="connBadge" class="badge neutral">Conectando...</div>
         <div class="meta">Device: <strong id="deviceLabel">esp32-lab-001</strong></div>
@@ -31,19 +27,16 @@
             <div class="card-value" id="tempVal">-- °C</div>
             <div id="tempState" class="card-sub">—</div>
           </article>
-
           <article id="cardHum" class="card card-hum">
             <div class="card-title">💧 Umidade</div>
             <div class="card-value" id="humVal">-- %</div>
             <div id="humState" class="card-sub">—</div>
           </article>
         </div>
-
         <div class="meta-row">
           <div>Última leitura: <strong id="lastTs">—</strong></div>
           <div id="pointsLabel">Pontos: 0</div>
         </div>
-
         <div class="chart-card">
           <canvas id="mainChart" aria-label="Gráfico de temperatura e umidade"></canvas>
           <div class="chart-actions">
@@ -60,12 +53,10 @@
           <label>DEVICE_ID</label>
           <input id="deviceId" type="text" value="esp32-lab-001" />
         </div>
-
         <div class="panel">
           <label>Últimas leituras (com horário)</label>
           <ul id="historyList" class="history" aria-live="polite"></ul>
         </div>
-
         <div class="panel">
           <label>Config</label>
           <div class="row">
@@ -90,6 +81,7 @@
     </footer>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -2,13 +2,18 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <DHT.h>
+#include <ArduinoJson.h>
+#include <time.h>
 
 const char* FIREBASE_HOST = "https://esp32senaiproject-default-rtdb.firebaseio.com";
 const char* FIREBASE_AUTH = "3dqpBR60YSlO1XObXGNmlCTPrg3USattpXuLkcKb";
 String devicePath = "/devices/esp32-lab-001/readings";
 
-#define WIFI_SSID "Wokwi-GUEST"
-#define WIFI_PASSWORD ""
+const char* WIFI_SSID = "Wokwi-GUEST";
+const char* WIFI_PASSWORD = "";
+
+const char* NTP_SERVER = "pool.ntp.org";
+const char* TZ_INFO = "<-03>3";
 
 #define DHTPIN 4
 #define DHTTYPE DHT22
@@ -23,11 +28,23 @@ void setup() {
   sensor.begin();
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.print("Conectando ao WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
   Serial.println("\nWiFi conectado!");
+
+  configTime(0, 0, NTP_SERVER);
+  setenv("TZ", TZ_INFO, 1);
+  tzset();
+
+  Serial.print("Sincronizando hora");
+  while (time(nullptr) < 1672531200) {
+      delay(500);
+      Serial.print(".");
+  }
+  Serial.println("\nHora sincronizada!");
 }
 
 void loop() {
@@ -41,13 +58,15 @@ void loop() {
       return;
     }
 
-    unsigned long ts = millis() / 1000;
+    time_t ts = time(nullptr);
 
-    String json = "{";
-    json += "\"temperature\":" + String(temperatura, 2) + ",";
-    json += "\"humidity\":" + String(humidade, 2) + ",";
-    json += "\"ts\":" + String(ts);
-    json += "}";
+    StaticJsonDocument<256> jsonDoc;
+    jsonDoc["temperature"] = temperatura;
+    jsonDoc["humidity"] = humidade;
+    jsonDoc["ts"] = ts;
+
+    String json;
+    serializeJson(jsonDoc, json);
 
     String url = String(FIREBASE_HOST) + devicePath + ".json?auth=" + FIREBASE_AUTH;
 
@@ -60,8 +79,6 @@ void loop() {
     if (httpResponseCode > 0) {
       Serial.print("✅ Enviado: ");
       Serial.println(json);
-      Serial.print("Resposta: ");
-      Serial.println(http.getString());
     } else {
       Serial.print("❌ Erro envio: ");
       Serial.println(http.errorToString(httpResponseCode).c_str());
